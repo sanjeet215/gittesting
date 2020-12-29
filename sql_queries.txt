@@ -1,0 +1,149 @@
+Hibernate: 
+    
+    create table address (
+       address_id bigint not null auto_increment,
+        address_line1 varchar(255),
+        address_line2 varchar(255),
+        city varchar(255),
+        country varchar(255),
+        state varchar(255),
+        street varchar(255),
+        zip_code varchar(255),
+        primary key (address_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table device (
+       device_id bigint not null auto_increment,
+        created_at datetime not null,
+        updated_at datetime not null,
+        imei_number varchar(255) not null,
+        model varchar(255),
+        org_id bigint not null,
+        primary key (device_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table driver (
+       driver_id bigint not null auto_increment,
+        created_at datetime not null,
+        updated_at datetime not null,
+        contact_number varchar(255),
+        driving_licence varchar(255),
+        full_name varchar(255),
+        whats_app_number varchar(255),
+        org_id bigint not null,
+        primary key (driver_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table organization (
+       org_id bigint not null auto_increment,
+        created_at datetime not null,
+        updated_at datetime not null,
+        description varchar(255),
+        image_url varchar(255),
+        org_name varchar(255),
+        org_ref_name varchar(255),
+        status bit not null,
+        org_address_id bigint,
+        primary key (org_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table orgparams (
+       org_id bigint not null,
+        created_at datetime not null,
+        updated_at datetime not null,
+        fuel_limit integer,
+        over_speed_limit integer,
+        over_utilized_hours integer,
+        over_utilized_kms integer,
+        under_speed_limit integer,
+        under_utilized_hours integer,
+        under_utilized_kms integer,
+        primary key (org_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table vehicle (
+       vehicle_id bigint not null auto_increment,
+        created_at datetime not null,
+        updated_at datetime not null,
+        vehicle_regn_number varchar(255),
+        vehicle_type varchar(255),
+        device_id bigint,
+        driver_id bigint,
+        org_id bigint not null,
+        vehicleowner_id bigint not null,
+        primary key (vehicle_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    create table vehicleowner (
+       vehicleowner_id bigint not null auto_increment,
+        created_at datetime not null,
+        updated_at datetime not null,
+        owner_contact varchar(255),
+        owner_name varchar(255),
+        primary key (vehicleowner_id)
+    ) engine=InnoDB
+Hibernate: 
+    
+    alter table device 
+       drop index UK_s3wtaisy4wuajigr5aodduq32
+Hibernate: 
+    
+    alter table device 
+       add constraint UK_s3wtaisy4wuajigr5aodduq32 unique (imei_number)
+Hibernate: 
+    
+    alter table device 
+       add constraint FKj9rbdvxxr5v9mbh9g3jkosttr 
+       foreign key (org_id) 
+       references organization (org_id) 
+       on delete cascade
+Hibernate: 
+    
+    alter table driver 
+       add constraint FKlhajgfq4lnxfjoyvcy3fgwew2 
+       foreign key (org_id) 
+       references organization (org_id) 
+       on delete cascade
+Hibernate: 
+    
+    alter table organization 
+       add constraint FKsonsc4r736iixg875tu5yay4q 
+       foreign key (org_address_id) 
+       references address (address_id)
+Hibernate: 
+    
+    alter table orgparams 
+       add constraint FKn2rh5mxhuhvqqllwl288s5jv5 
+       foreign key (org_id) 
+       references organization (org_id)
+Hibernate: 
+    
+    alter table vehicle 
+       add constraint FKnyyt3b1vm43ju0kl31aquaky5 
+       foreign key (device_id) 
+       references device (device_id)
+Hibernate: 
+    
+    alter table vehicle 
+       add constraint FKdpor9ohov2f3optwe7twe49tt 
+       foreign key (driver_id) 
+       references driver (driver_id)
+Hibernate: 
+    
+    alter table vehicle 
+       add constraint FKso0mfgmjmmq9ydm3l0xwrv85u 
+       foreign key (org_id) 
+       references organization (org_id) 
+       on delete cascade
+Hibernate: 
+    
+    alter table vehicle 
+       add constraint FKldt0hgfo1m7v8h48as2rqvqk7 
+       foreign key (vehicleowner_id) 
+       references vehicleowner (vehicleowner_id)

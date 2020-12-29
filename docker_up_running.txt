@@ -1,0 +1,68 @@
+docker run -p 3306:3306 --name localhost -e MYSQL_ROOT_PASSWORD=password -d mysql:latest 
+
+docker pull rabbitmq:3-management
+
+docker run -d -p 15672:15672 -p 5672:5672 --name rabbit-test-for-medium rabbitmq:3-management
+
+
+
+docker run -p 6379:6379 --name redis-db -d redis 
+
+
+
+sudo systemctl stop  usermgmtservice
+
+
+
+scorpious_dev_team
+
+
+sudo systemctl status  redis-cache-maintenance
+
+sudo systemctl start redis-cache-maintenance
+
+
+private String timeStamp;
+
+
+
+Optional<Other> result =
+    things.stream()
+          .map(this::resolve)
+          .flatMap(Optional::stream)
+          .findFirst();
+Java 8
+Yes, this was a small hole in the API, in that it's somewhat inconvenient to turn an Optional<T> into a zero-or-one length Stream<T>. You could do this:
+
+Optional<Other> result =
+    things.stream()
+          .map(this::resolve)
+          .flatMap(o -> o.isPresent() ? Stream.of(o.get()) : Stream.empty())
+          .findFirst();
+
+
+Fule is showing as 0
+
+
+delete from redis when a record gets deleted from mysql
+
+
+
+
+org/error
+
+download -- override tostring
+sorting of error records
+
+
+
+
+
+public List<VehicleDeviceResponse> vehicleDeviceData(String token) {
+        String orgRefName = utilService.getCurrentUserOrgRefName(token);
+        return vehicleRepo.findByOrgRefName(orgRefName).stream()
+                .flatMap(recordList -> recordList.stream())
+                .flatMap(vehicle -> generateVehicleDeviceResponse(vehicle))
+                .collect(Collectors.toList());
+
+    }
